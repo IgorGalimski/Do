@@ -14,7 +14,7 @@
         android:title="@string/schedules_bottom_menu"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_other"
+        android:id="@+id/action_feed"
         android:enabled="true"
         android:icon="@android:drawable/stat_notify_chat"
         android:title="@string/feed_bottom_menu"
