@@ -4,4 +4,5 @@
     <string name="today_bottom_menu">Today</string>
     <string name="schedules_bottom_menu">Schedules</string>
     <string name="feed_bottom_menu">Feed</string>
+    <string name="today_text">Today</string>
 </resources>

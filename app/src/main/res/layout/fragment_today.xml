@@ -5,10 +5,28 @@
     android:layout_height="match_parent"
     tools:context=".TodayFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/todayDateText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Test" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:visibility="visible"
+        tools:text="23" />
+
+    <TextView
+        android:id="@+id/todayText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/today_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:visibility="visible"
+        tools:text="123" />
+
+    <TableLayout
+        android:id="@+id/taskTableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </TableLayout>
 
 </FrameLayout>
