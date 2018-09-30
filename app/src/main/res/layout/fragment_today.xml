@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TodayFragment">
 
-    <TextView
-        android:id="@+id/todayDateText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:visibility="visible"
-        tools:text="23" />
 
     <TextView
         android:id="@+id/todayText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/today_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:visibility="visible"
-        tools:text="123" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp"
+        android:background="#E8E8E8"
+        android:text="@string/add_task"
+        android:textAlignment="center"
+        android:textColor="#ADD8E6"
+        android:textSize="25sp"
+        android:typeface="serif" />
 
     <TableLayout
         android:id="@+id/taskTableLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </TableLayout>
 
-</FrameLayout>
+</LinearLayout>

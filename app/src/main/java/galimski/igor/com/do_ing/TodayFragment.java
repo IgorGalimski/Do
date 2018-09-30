@@ -1,5 +1,7 @@
 package galimski.igor.com.do_ing;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,44 +30,87 @@ public class TodayFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_today, container, false);
 
-        //SetCurrentDate();
-        ShowTasks(Calendar.getInstance().getTime());
+        SetCurrentDate();
+        ShowTasks();
 
         return view;
     }
 
-    private void SetCurrentDate(){
-        String timeStamp = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+    @Override
+    public void onStart() {
 
-        TextView _todayTextView = (TextView)view.findViewById(R.id.todayDateText);
+        super.onStart();
+
+        ShowTasks();
+    }
+
+    private void SetCurrentDate(){
+        String timeStamp = GetFormattedDate(Calendar.getInstance().getTime(), false);
+
+        TextView _todayTextView = (TextView)view.findViewById(R.id.todayText);
         _todayTextView.setText(timeStamp);
     }
 
-    private void ShowTasks(Date date)
+    private String GetFormattedDate(Date date, boolean withTime)
     {
+        if(withTime)
+        {
+            return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
+        }
+
+        return new SimpleDateFormat("dd-MM-yyyy").format(date);
+    }
+
+    public void ShowTasks()
+    {
+        Date date = Calendar.getInstance().getTime();
+
         TableLayout tableLayout = view.findViewById(R.id.taskTableLayout);
         tableLayout.removeAllViews();
 
-        for(Task task: TaskManager.getInstance().GetTasks())
+        for(final Task task: TaskManager.GetInstance().GetTasks())
         {
             TableRow tableRow = new TableRow(getContext());
 
             TextView taskNameTextView = new TextView(getContext());
-            taskNameTextView.setText(task.GetShortDescription());
+            taskNameTextView.setText(task.GetFullDescription());
 
             tableRow.addView(taskNameTextView, 0);
-
-            TextView createdDate = new TextView(getContext());
-            createdDate.setText(task.GetCreatedDate().toString());
-
-            tableRow.addView(createdDate, 1);
 
             ImageView priorityImage = new ImageView(getContext());
             priorityImage.setImageResource(R.drawable.ic_action_name);
 
-            tableRow.addView(priorityImage, 2);
+            tableRow.addView(priorityImage, 1);
 
             tableLayout.addView(tableRow);
+
+            tableRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle(task.GetShortDescription());
+                    builder.setMessage(task.GetFullDescription());
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+
+                    builder.setNegativeButton(getResources().getText(R.string.delete_notification), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            TaskManager.GetInstance().DeleteTask(task);
+
+                            ShowTasks();
+
+                        }
+                    });
+
+                    builder.show();
+                }
+            });
         }
     }
 }

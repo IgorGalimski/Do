@@ -5,4 +5,12 @@
     <string name="schedules_bottom_menu">Schedules</string>
     <string name="feed_bottom_menu">Feed</string>
     <string name="today_text">Today</string>
+    <string name="add_task">Create task</string>
+    <string name="short_Description">Short description</string>
+    <string name="submit">Submit</string>
+    <string name="full_description">Full description</string>
+    <string name="task_added">Task added</string>
+    <string name="requare_field">Requare field</string>
+    <string name="add_notification">AddNotification</string>
+    <string name="delete_notification">Delete notification</string>
 </resources>
