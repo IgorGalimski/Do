@@ -3,6 +3,7 @@ package galimski.igor.com.do_ing.sampledata;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.util.Log;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import galimski.igor.com.do_ing.MainActivity;
 import galimski.igor.com.do_ing.Task;
 import galimski.igor.com.do_ing.TaskPriority;
 
@@ -20,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "TaskDatabase";
+    private static final String DATABASE_NAME = "TaskDatabase.db";
 
     private static final String TABLE_TASK = "Task";
 
@@ -92,9 +94,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_CREATIONDATE, task.GetCreatedDate().toString());
         values.put(COLUMN_TASK_COMPLETIONDATE, task.GetCompletionDate().toString());
 
-        values.put(COLUMN_TASK_PRIORITY, task.GetCompletionDate().toString());
+        values.put(COLUMN_TASK_PRIORITY, task.GetTaskPriority().toString());
 
         db.insert(TABLE_TASK, null, values);
+
+        db.execSQL("INSERT INTO " + TABLE_TASK
+                + " (" + task.GetShortDescription() + ","
+                + task.GetFullDescription() + ","
+                + task.GetCreatedDate().toString() + ","
+                + task.GetCompletionDate().toString() + ","
+                + task.GetCompletionDate());
+
+        MainActivity.ShowMessage(String.valueOf(DatabaseUtils.queryNumEntries(db, TABLE_TASK)));
 
         db.close();
     }

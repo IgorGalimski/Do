@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".TodayFragment">
 
-
     <TextView
         android:id="@+id/todayText"
         android:layout_width="match_parent"

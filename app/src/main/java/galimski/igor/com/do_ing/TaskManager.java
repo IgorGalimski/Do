@@ -13,11 +13,7 @@ public class TaskManager
         return Instance;
     }
 
-    private ArrayList<Task> _tasks;
-
-    public TaskManager()
-    {
-    }
+    private ArrayList<Task> _tasks = new ArrayList<Task>();
 
     public void PutTestTasks()
     {
@@ -27,22 +23,18 @@ public class TaskManager
         for (int i = 0; i < 100; i++)
         {
             MainActivity.GetInstance().GetDatabaseHepler().AddTask(test1);
-            _tasks.add(test1);
+            //_tasks.add(test1);
         }
 
-        GetTasks();
+        //GetTasks();
 
-        //_tasks = MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
+        _tasks = MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
+        //MainActivity.ShowMessage(String.valueOf(_tasks.size()));
 
     }
 
     public ArrayList<Task> GetTasks()
     {
-       if(_tasks == null)
-       {
-           _tasks = new ArrayList<>();
-       }
-
        return _tasks;
     }
 
@@ -55,6 +47,8 @@ public class TaskManager
         {
             MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.GetCompletionDate().getTime(), newTask.GetId());
         }
+
+        MainActivity.GetInstance().GetDatabaseHepler().AddTask(newTask);
     }
 
     public void DeleteTask(Task task)

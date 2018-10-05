@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager _fragmentManager;
 
     TodayFragment _todayFragment;
+    AddTaskFragment _addTaskFragment;
 
     private FloatingActionButton _addButton;
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WAKE_LOCK}, 123 );
 
         _todayFragment = new TodayFragment();
+        _addTaskFragment = new AddTaskFragment();
 
         _bottomNavigationView = findViewById(R.id.bottomNavigationView);
         _bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -78,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.action_add:
 
-                                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-                                startActivity(intent);
+                                UpdateFragment(_addTaskFragment);
 
                                 break;
                             case R.id.action_feed:
