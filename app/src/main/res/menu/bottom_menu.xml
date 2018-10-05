@@ -8,10 +8,10 @@
         android:title="@string/today_bottom_menu"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/action_add"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="@string/schedules_bottom_menu"
+        android:title="@string/add_bottom_menu"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_feed"

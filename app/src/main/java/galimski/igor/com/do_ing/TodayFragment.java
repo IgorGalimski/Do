@@ -41,6 +41,8 @@ public class TodayFragment extends Fragment {
 
         super.onStart();
 
+        TaskManager.GetInstance().PutTestTasks();
+
         ShowTasks();
     }
 

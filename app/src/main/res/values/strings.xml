@@ -2,7 +2,7 @@
     <string name="app_name">Do-ing</string>
     <string name="action_settings">Settings</string>
     <string name="today_bottom_menu">Today</string>
-    <string name="schedules_bottom_menu">Schedules</string>
+    <string name="add_bottom_menu">Create</string>
     <string name="feed_bottom_menu">Feed</string>
     <string name="today_text">Today</string>
     <string name="add_task">Create task</string>

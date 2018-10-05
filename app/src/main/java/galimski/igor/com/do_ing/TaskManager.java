@@ -1,6 +1,7 @@
 package galimski.igor.com.do_ing;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TaskManager
@@ -16,12 +17,23 @@ public class TaskManager
 
     public TaskManager()
     {
-        Task test1 = new Task("Task1", "FullTask1", TaskPriority.Immediate, new Date(2018,1, 1));
-        MainActivity.GetInstance().GetDatabaseHepler().AddTask(test1);
+    }
 
-        MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(test1), test1.GetCompletionDate().getTime(), test1.GetId());
+    public void PutTestTasks()
+    {
+        Date completionDate = Calendar.getInstance().getTime();
+        Task test1 = new Task("Task1", "FullTask1", TaskPriority.Immediate, completionDate);
 
-        _tasks = MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
+        for (int i = 0; i < 100; i++)
+        {
+            MainActivity.GetInstance().GetDatabaseHepler().AddTask(test1);
+            _tasks.add(test1);
+        }
+
+        GetTasks();
+
+        //_tasks = MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
+
     }
 
     public ArrayList<Task> GetTasks()
@@ -34,7 +46,7 @@ public class TaskManager
        return _tasks;
     }
 
-    public void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, java.sql.Date completitionDate, Boolean addNotification)
+    public void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completitionDate, Boolean addNotification)
     {
         Task newTask = new Task(shortDescription, fullDescription, taskPriority, completitionDate);
         _tasks.add(newTask);

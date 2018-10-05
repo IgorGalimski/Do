@@ -10,7 +10,6 @@ import android.util.Log;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import galimski.igor.com.do_ing.MainActivity;
 import galimski.igor.com.do_ing.Task;
 import galimski.igor.com.do_ing.TaskPriority;
 
@@ -65,10 +64,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i(TAG, "MyDatabaseHelper.onUpgrade ... ");
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASK);
+        if (oldVersion != newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASK);
+            onCreate(db);
+        }
 
-        onCreate(db);
+    }
 
+    // Called when the database connection is being configured.
+    // Configure database settings for things like foreign key support, write-ahead logging, etc.
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     public void AddTask(Task task) {
@@ -130,7 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         if (cursor.moveToFirst()) {
             do {
                 Task task = new Task();

@@ -1,17 +1,21 @@
 package galimski.igor.com.do_ing;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +27,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import galimski.igor.com.do_ing.sampledata.DatabaseHelper;
 
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         Instance = this;
 
+        ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WAKE_LOCK}, 123 );
+
         _todayFragment = new TodayFragment();
 
         _bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -69,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
                                 UpdateFragment(_todayFragment);
 
                                 break;
-                            case R.id.action_schedules:
+                            case R.id.action_add:
 
-                                //UpdateFragment(null);
+                                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+                                startActivity(intent);
 
                                 break;
                             case R.id.action_feed:
@@ -83,17 +91,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        _addButton = findViewById(R.id.addButton);
-        _addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
         _datebaseHelper = new DatabaseHelper(this);
     }
@@ -120,15 +117,19 @@ public class MainActivity extends AppCompatActivity {
         return notification;
     }
 
+    //@RequiresApi(api = Build.VERSION_CODES.M)
     public void DelayNotification(Notification notification, long futureInMillis, int id){
 
-        Intent notificationIntent = new Intent(this, AlarmReceiver.class);
+        AtomicInteger requestCodeCounter = new AtomicInteger(0);
+
+        Intent notificationIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCodeCounter.incrementAndGet(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
     }
 
     public static void ShowMessage(String message)

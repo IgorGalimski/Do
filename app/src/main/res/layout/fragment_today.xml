@@ -20,10 +20,17 @@
         android:textSize="25sp"
         android:typeface="serif" />
 
-    <TableLayout
-        android:id="@+id/taskTableLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <TableLayout
+            android:id="@+id/taskTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
 
 
 </LinearLayout>

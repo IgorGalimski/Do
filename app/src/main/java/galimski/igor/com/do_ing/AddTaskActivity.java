@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
 
@@ -60,8 +60,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         TaskPriority taskPriority = (TaskPriority) _prioritySpinner.getSelectedItem();
 
-        Date completionDate = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-        //completionDate.setHours(timePicker.getHour());
+        Date completionDate = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getHour(), timePicker.getMinute());
 
         Boolean showNotification = showNotificationCheckbox.isSelected();
 
