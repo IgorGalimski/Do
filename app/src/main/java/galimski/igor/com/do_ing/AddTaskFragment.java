@@ -75,5 +75,7 @@ public class AddTaskFragment extends Fragment {
         Toast toast = Toast.makeText(getContext(), R.string.task_added, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+
+        MainActivity.GetInstance().UpdateFragment(MainActivity.GetInstance().TodayFragment);
     }
 }

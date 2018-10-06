@@ -1,11 +1,8 @@
-package galimski.igor.com.do_ing.sampledata;
+package galimski.igor.com.do_ing;
 
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
-
-import galimski.igor.com.do_ing.MainActivity;
-import galimski.igor.com.do_ing.Task;
 
 public class GetAllTaskAsync extends AsyncTask<Void, Integer, ArrayList<Task>>
 {
@@ -17,7 +14,7 @@ public class GetAllTaskAsync extends AsyncTask<Void, Integer, ArrayList<Task>>
     @Override
     protected ArrayList<Task> doInBackground(Void... voids) {
 
-        return MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
+        return DatabaseHelper.GetAllTasks();
     }
 }
 

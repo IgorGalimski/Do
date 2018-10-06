@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import galimski.igor.com.do_ing.sampledata.AddTaskAsync;
-import galimski.igor.com.do_ing.sampledata.GetAllTaskAsync;
-
 public class TaskManager
 {
     private static ArrayList<Task> _tasks = new ArrayList<Task>();
@@ -54,11 +51,9 @@ public class TaskManager
 
     public static void DeleteTask(Task task)
     {
-        if(_tasks.contains(task))
-        {
-            _tasks.remove(task);
-        }
+        _tasks.remove(task);
 
-        MainActivity.GetInstance().GetDatabaseHepler().DeleteTask(task);
+        DeleteTaskAsync deleteTaskAsync = new DeleteTaskAsync();
+        deleteTaskAsync.execute(task);
     }
 }

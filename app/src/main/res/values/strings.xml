@@ -12,5 +12,5 @@
     <string name="task_added">Task added</string>
     <string name="requare_field">Requare field</string>
     <string name="add_notification">AddNotification</string>
-    <string name="delete_notification">Delete notification</string>
+    <string name="delete_task">Delete task</string>
 </resources>

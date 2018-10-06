@@ -23,7 +23,6 @@ import com.crashlytics.android.Crashlytics;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import galimski.igor.com.do_ing.sampledata.DatabaseHelper;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,20 +34,13 @@ public class MainActivity extends AppCompatActivity {
         return Instance;
     }
 
-    private DatabaseHelper _datebaseHelper;
-
     private BottomNavigationView _bottomNavigationView;
     FragmentManager _fragmentManager;
 
-    TodayFragment _todayFragment;
-    AddTaskFragment _addTaskFragment;
+    public TodayFragment TodayFragment;
+    public AddTaskFragment AddTaskFragment;
 
     private FloatingActionButton _addButton;
-
-    public DatabaseHelper GetDatabaseHepler()
-    {
-        return _datebaseHelper;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         Instance = this;
 
+        DatabaseHelper.Init();
+
         ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WAKE_LOCK}, 123 );
 
-        _todayFragment = new TodayFragment();
-        _addTaskFragment = new AddTaskFragment();
+        TodayFragment = new TodayFragment();
+        AddTaskFragment = new AddTaskFragment();
 
-        UpdateFragment(_todayFragment);
+        UpdateFragment(TodayFragment);
 
         _bottomNavigationView = findViewById(R.id.bottomNavigationView);
         _bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -73,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_today:
 
-                                //UpdateFragment(_todayFragment);
+                                UpdateFragment(TodayFragment);
 
                                 break;
                             case R.id.action_add:
 
-                                UpdateFragment(_addTaskFragment);
+                                UpdateFragment(AddTaskFragment);
 
                                 break;
                             case R.id.action_feed:
@@ -90,11 +84,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        _datebaseHelper = new DatabaseHelper(this);
     }
 
-    private void UpdateFragment(Fragment fragment)
+    public void UpdateFragment(Fragment fragment)
     {
         _fragmentManager = this.getSupportFragmentManager();
 

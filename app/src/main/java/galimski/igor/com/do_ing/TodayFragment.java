@@ -68,7 +68,7 @@ public class TodayFragment extends Fragment {
 
         for(final Task task: TaskManager.GetTasks())
         {
-            if(task.CompletionDate != date)
+            if(task.CompletionDate == date)
             {
                 continue;
             }
