@@ -1,8 +1,7 @@
 package galimski.igor.com.do_ing;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -71,7 +70,7 @@ public class AddTaskFragment extends Fragment {
 
         Boolean showNotification = showNotificationCheckbox.isSelected();
 
-        TaskManager.GetInstance().AddTask(shortDescription, fullDescription, taskPriority, completionDate, showNotification);
+        TaskManager.AddTask(shortDescription, fullDescription, taskPriority, completionDate, showNotification);
 
         Toast toast = Toast.makeText(getContext(), R.string.task_added, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);

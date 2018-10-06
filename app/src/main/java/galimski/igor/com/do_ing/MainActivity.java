@@ -3,16 +3,11 @@ package galimski.igor.com.do_ing;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -22,14 +17,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import com.crashlytics.android.Crashlytics;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import galimski.igor.com.do_ing.sampledata.DatabaseHelper;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         Instance = this;
@@ -67,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         _todayFragment = new TodayFragment();
         _addTaskFragment = new AddTaskFragment();
 
+        UpdateFragment(_todayFragment);
+
         _bottomNavigationView = findViewById(R.id.bottomNavigationView);
         _bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_today:
 
-                                UpdateFragment(_todayFragment);
+                                //UpdateFragment(_todayFragment);
 
                                 break;
                             case R.id.action_add:
@@ -110,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(task.GetShortDescription())
-                        .setContentText(task.GetFullDescription());
+                        .setContentTitle(task.ShortDescription)
+                        .setContentText(task.FullDescription);
 
         Notification notification = builder.build();
 

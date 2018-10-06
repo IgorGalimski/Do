@@ -1,21 +1,34 @@
 package galimski.igor.com.do_ing;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
 import java.util.Calendar;
 import java.util.Date;
 
+@Entity
 public class Task
 {
-    private int _id;
+    @PrimaryKey(autoGenerate = true)
+    public int Id;
 
-    private Date _createdDate;
-    private Date _completionDate;
+    @TypeConverters({TaskConverter.class})
+    public Date CreatedDate;
+    @TypeConverters({TaskConverter.class})
+    public Date CompletionDate;
 
-    private TaskPriority _taskPriority;
+    @TypeConverters({TaskConverter.class})
+    public TaskPriority TaskPriority;
 
-    private String _shortDescription;
-    private String _fullDescription;
+    @ColumnInfo(name = "_shortDescription")
+    public String ShortDescription;
+    @ColumnInfo(name = "_fullDescription")
+    public String FullDescription;
 
-    private boolean _notificationShown;
+    @TypeConverters({TaskConverter.class})
+    public boolean _notificationShown;
 
     public Task()
     {
@@ -24,53 +37,12 @@ public class Task
 
     public Task(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completionDate)
     {
-        _shortDescription = shortDescription;
-        _fullDescription = fullDescription;
+        ShortDescription = shortDescription;
+        FullDescription = fullDescription;
 
-        _taskPriority = taskPriority;
+        TaskPriority = taskPriority;
 
-        _createdDate = Calendar.getInstance().getTime();
-        _completionDate = completionDate;
-    }
-
-    public int GetId() { return _id; }
-    public String GetShortDescription()
-    {
-        return _shortDescription;
-    }
-    public String GetFullDescription() { return _fullDescription; }
-    public Date GetCreatedDate() { return _createdDate; }
-    public Date GetCompletionDate() { return _completionDate; }
-    public TaskPriority GetTaskPriority() { return _taskPriority; }
-    public boolean GetNotificationShown() { return _notificationShown; }
-
-    public void SetShortDescription(String shortDescription)
-    {
-        _shortDescription = shortDescription;
-    }
-
-    public void SetFullDescription(String fullDescription)
-    {
-        _fullDescription = fullDescription;
-    }
-
-    public void SetCreatedDate(Date createdDate)
-    {
-        _createdDate = createdDate;
-    }
-
-    public void SetCompletionDate(Date completionDateDate)
-    {
-        _completionDate = completionDateDate;
-    }
-
-    public void SetTaskPriority(TaskPriority taskPriority)
-    {
-        _taskPriority = taskPriority;
-    }
-
-    public void SetNotificationShown(boolean shown)
-    {
-        _notificationShown = true;
+        CreatedDate = Calendar.getInstance().getTime();
+        CompletionDate = completionDate;
     }
 }

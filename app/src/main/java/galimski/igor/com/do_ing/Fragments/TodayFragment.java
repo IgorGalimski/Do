@@ -30,9 +30,6 @@ public class TodayFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_today, container, false);
 
-        SetCurrentDate();
-        ShowTasks();
-
         return view;
     }
 
@@ -41,8 +38,7 @@ public class TodayFragment extends Fragment {
 
         super.onStart();
 
-        TaskManager.GetInstance().PutTestTasks();
-
+        SetCurrentDate();
         ShowTasks();
     }
 
@@ -70,12 +66,17 @@ public class TodayFragment extends Fragment {
         TableLayout tableLayout = view.findViewById(R.id.taskTableLayout);
         tableLayout.removeAllViews();
 
-        for(final Task task: TaskManager.GetInstance().GetTasks())
+        for(final Task task: TaskManager.GetTasks())
         {
+            if(task.CompletionDate != date)
+            {
+                continue;
+            }
+
             TableRow tableRow = new TableRow(getContext());
 
             TextView taskNameTextView = new TextView(getContext());
-            taskNameTextView.setText(task.GetFullDescription());
+            taskNameTextView.setText(task.FullDescription);
 
             tableRow.addView(taskNameTextView, 0);
 
@@ -92,18 +93,18 @@ public class TodayFragment extends Fragment {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                    builder.setTitle(task.GetShortDescription());
-                    builder.setMessage(task.GetFullDescription());
+                    builder.setTitle(task.ShortDescription);
+                    builder.setMessage(task.FullDescription);
 
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
                     });
 
-                    builder.setNegativeButton(getResources().getText(R.string.delete_notification), new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getResources().getText(R.string.delete_task), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
-                            TaskManager.GetInstance().DeleteTask(task);
+                            TaskManager.DeleteTask(task);
 
                             ShowTasks();
 

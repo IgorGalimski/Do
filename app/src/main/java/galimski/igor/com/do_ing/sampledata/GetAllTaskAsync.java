@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import galimski.igor.com.do_ing.MainActivity;
 import galimski.igor.com.do_ing.Task;
 
-public class DatabaseTask extends AsyncTask<Void, Integer, ArrayList<Task>>
+public class GetAllTaskAsync extends AsyncTask<Void, Integer, ArrayList<Task>>
 {
-
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
@@ -21,3 +20,4 @@ public class DatabaseTask extends AsyncTask<Void, Integer, ArrayList<Task>>
         return MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
     }
 }
+

@@ -4,54 +4,55 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import galimski.igor.com.do_ing.sampledata.AddTaskAsync;
+import galimski.igor.com.do_ing.sampledata.GetAllTaskAsync;
+
 public class TaskManager
 {
-    private static final TaskManager Instance = new TaskManager();
+    private static ArrayList<Task> _tasks = new ArrayList<Task>();
 
-    public static TaskManager GetInstance()
+    public TaskManager()
     {
-        return Instance;
-    }
-
-    private ArrayList<Task> _tasks = new ArrayList<Task>();
-
-    public void PutTestTasks()
-    {
-        Date completionDate = Calendar.getInstance().getTime();
-        Task test1 = new Task("Task1", "FullTask1", TaskPriority.Immediate, completionDate);
-
-        for (int i = 0; i < 100; i++)
-        {
-            MainActivity.GetInstance().GetDatabaseHepler().AddTask(test1);
-            //_tasks.add(test1);
-        }
-
-        //GetTasks();
-
-        _tasks = MainActivity.GetInstance().GetDatabaseHepler().GetAllTasks();
-        //MainActivity.ShowMessage(String.valueOf(_tasks.size()));
 
     }
 
-    public ArrayList<Task> GetTasks()
+    public static ArrayList<Task> GetTasks()
     {
+       if(_tasks.size() == 0)
+       {
+           try
+           {
+                GetAllTaskAsync getAllTaskAsync = new GetAllTaskAsync();
+                getAllTaskAsync.execute();
+
+               _tasks = getAllTaskAsync.get();
+           }
+           catch (Exception exp)
+           {
+                MainActivity.ShowMessage(exp.getMessage());
+           }
+
+           _tasks.add(new Task("short", "full", TaskPriority.Immediate, Calendar.getInstance().getTime()));
+       }
+
        return _tasks;
     }
 
-    public void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completitionDate, Boolean addNotification)
+    public static void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completitionDate, Boolean addNotification)
     {
         Task newTask = new Task(shortDescription, fullDescription, taskPriority, completitionDate);
         _tasks.add(newTask);
 
         if(addNotification)
         {
-            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.GetCompletionDate().getTime(), newTask.GetId());
+            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
         }
 
-        MainActivity.GetInstance().GetDatabaseHepler().AddTask(newTask);
+        AddTaskAsync addTaskAsync = new AddTaskAsync();
+        addTaskAsync.execute(newTask);
     }
 
-    public void DeleteTask(Task task)
+    public static void DeleteTask(Task task)
     {
         if(_tasks.contains(task))
         {
