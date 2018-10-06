@@ -1,15 +1,14 @@
 package galimski.igor.com.do_ing;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +17,11 @@ import java.util.Date;
 
 public class TodayFragment extends Fragment {
 
-    private View view;
+    private View _view;
+
+    private RecyclerView _recyclerView;
+    private RecyclerView.Adapter _adapter;
+    private RecyclerView.LayoutManager _layoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,9 @@ public class TodayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_today, container, false);
+        _view = inflater.inflate(R.layout.fragment_today, container, false);
 
-        return view;
+        return _view;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class TodayFragment extends Fragment {
     private void SetCurrentDate(){
         String timeStamp = GetFormattedDate(Calendar.getInstance().getTime(), false);
 
-        TextView _todayTextView = (TextView)view.findViewById(R.id.todayText);
+        TextView _todayTextView = (TextView)_view.findViewById(R.id.todayText);
         _todayTextView.setText(timeStamp);
     }
 
@@ -63,57 +66,39 @@ public class TodayFragment extends Fragment {
     {
         Date date = Calendar.getInstance().getTime();
 
-        TableLayout tableLayout = view.findViewById(R.id.taskTableLayout);
-        tableLayout.removeAllViews();
+        _recyclerView = (RecyclerView) _view.findViewById(R.id.taskRecyclerView);
 
-        for(final Task task: TaskManager.GetTasks())
+        _layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        _recyclerView.setLayoutManager(_layoutManager);
+
+        _adapter = new RecyclerAdapter(TaskManager.GetTasks());
+        _recyclerView.setAdapter(_adapter);
+
+        final SwipeController swipeController = new SwipeController(new SwipeControllerActions()
         {
-            if(task.CompletionDate == date)
+            @Override
+            public void onLeftClicked(int position)
             {
-                continue;
+
             }
 
-            TableRow tableRow = new TableRow(getContext());
+            @Override
+            public void onRightClicked(int position)
+            {
+                TaskManager.GetTasks().remove(position);
 
-            TextView taskNameTextView = new TextView(getContext());
-            taskNameTextView.setText(task.FullDescription);
+                _adapter.notifyItemRemoved(position);
+                _adapter.notifyItemRangeChanged(position, _adapter.getItemCount());
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(_recyclerView);
 
-            tableRow.addView(taskNameTextView, 0);
-
-            ImageView priorityImage = new ImageView(getContext());
-            priorityImage.setImageResource(R.drawable.ic_action_name);
-
-            tableRow.addView(priorityImage, 1);
-
-            tableLayout.addView(tableRow);
-
-            tableRow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                    builder.setTitle(task.ShortDescription);
-                    builder.setMessage(task.FullDescription);
-
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-
-                    builder.setNegativeButton(getResources().getText(R.string.delete_task), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            TaskManager.DeleteTask(task);
-
-                            ShowTasks();
-
-                        }
-                    });
-
-                    builder.show();
-                }
-            });
-        }
+        _recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 }

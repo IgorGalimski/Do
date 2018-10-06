@@ -19,7 +19,7 @@
         android:textSize="25sp"
         android:typeface="serif" />
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
@@ -29,7 +29,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </ScrollView>
+    </ScrollView>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/taskRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:overScrollMode="never"/>
 
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 package galimski.igor.com.do_ing;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class TaskManager
@@ -29,7 +28,7 @@ public class TaskManager
                 MainActivity.ShowMessage(exp.getMessage());
            }
 
-           _tasks.add(new Task("short", "full", TaskPriority.Immediate, Calendar.getInstance().getTime()));
+           //_tasks.add(new Task("short", "full", TaskPriority.Immediate, Calendar.getInstance().getTime()));
        }
 
        return _tasks;
