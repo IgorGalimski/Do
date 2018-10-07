@@ -1,4 +1,4 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.Other;
 
 import android.app.Notification;
 import android.app.NotificationManager;

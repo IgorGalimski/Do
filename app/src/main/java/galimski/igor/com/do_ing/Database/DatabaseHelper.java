@@ -1,31 +1,19 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.Database;
 
 import android.arch.persistence.room.Room;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+import galimski.igor.com.do_ing.Database.Data.Task;
+import galimski.igor.com.do_ing.Database.Data.TaskLifecycle;
+import galimski.igor.com.do_ing.View.Activites.MainActivity;
 
 public class DatabaseHelper {
 
     private static final String TAG = "SQLite";
 
-    private static final int DATABASE_VERSION = 1;
-
     private static final String DATABASE_NAME = "TaskDatabaseRoom";
-
-    private static final String TABLE_TASK = "Task";
-
-    private static final String COLUMN_TASK_ID ="Id";
-    private static final String COLUMN_TASK_SHORT ="ShortDescription";
-    private static final String COLUMN_TASK_FULL = "FullDescription";
-
-    private static final String COLUMN_TASK_CREATIONDATE = "CreatedDate";
-    private static final String COLUMN_TASK_COMPLETIONDATE = "CompletionDate";
-
-    private static final String COLUMN_TASK_PRIORITY = "Priority";
-
-    private static final String COLUMN_TASK_SHOWN= "Shown";
 
     private static TaskDao db;
 
@@ -37,21 +25,21 @@ public class DatabaseHelper {
     public static void AddTask(Task task) {
         Log.i(TAG, "MyDatabaseHelper.addTask ... ");
 
-        db.insert(task);
+        db.insertTask(task);
 
     }
 
     public static Task GetTask(int id) {
         Log.i(TAG, "MyDatabaseHelper.getTask ... " + id);
 
-        return db.findById(id);
+        return db.findTaskById(id);
     }
 
 
     public static ArrayList<Task> GetAllTasks() {
         Log.i(TAG, "MyDatabaseHelper.getAllTasks ... " );
 
-        return new ArrayList<>(db.getAll());
+        return new ArrayList<>(db.getAllTasks());
     }
 
     /*public int updateNote(Note note) {
@@ -68,9 +56,24 @@ public class DatabaseHelper {
                 new String[]{String.valueOf(note.getNoteId())});
     }*/
 
-    public static void DeleteTask(Task task) {
+    public static void DeleteTask(Task task)
+    {
         Log.i(TAG, "MyDatabaseHelper.deleteTask ... ");
 
-        db.delete(task);
+        db.deleteTask(task);
+    }
+
+    public static void AddTaskLifecycle(TaskLifecycle taskLifecycle)
+    {
+        Log.i(TAG, "MyDatabaseHelper.AddTaskLifecycle ... ");
+
+        db.insertTaskLifecycle(taskLifecycle);
+    }
+
+    public static ArrayList<TaskLifecycle> GetAllTaskLifecycles()
+    {
+        Log.i(TAG, "MyDatabaseHelper.GetAllTaskLifecycles ... ");
+
+        return new ArrayList<>(db.getAllTasksLifecycles());
     }
 }

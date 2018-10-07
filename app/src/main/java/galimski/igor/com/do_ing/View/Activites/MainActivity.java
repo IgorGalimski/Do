@@ -1,4 +1,4 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.View.Activites;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -23,6 +23,11 @@ import com.crashlytics.android.Crashlytics;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import galimski.igor.com.do_ing.Other.AlarmReceiver;
+import galimski.igor.com.do_ing.Database.Data.Task;
+import galimski.igor.com.do_ing.Database.DatabaseHelper;
+import galimski.igor.com.do_ing.R;
+import galimski.igor.com.do_ing.View.Fragments.*;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {

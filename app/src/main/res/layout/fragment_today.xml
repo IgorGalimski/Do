@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TodayFragment">
+    tools:context=".View.Fragments.TodayFragment">
 
     <TextView
         android:id="@+id/todayText"
@@ -17,19 +17,7 @@
         android:textAlignment="center"
         android:textColor="#ADD8E6"
         android:textSize="25sp"
-        android:typeface="serif" />
-
-    <!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
-
-        <TableLayout
-            android:id="@+id/taskTableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>-->
+        android:typeface="serif"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/taskRecyclerView"

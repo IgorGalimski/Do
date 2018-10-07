@@ -1,4 +1,4 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.View.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Date;
+
+import galimski.igor.com.do_ing.Database.Data.TaskPriority;
+import galimski.igor.com.do_ing.View.Activites.MainActivity;
+import galimski.igor.com.do_ing.Managers.TaskManager;
+import galimski.igor.com.do_ing.R;
 
 public class AddTaskFragment extends Fragment {
 

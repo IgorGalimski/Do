@@ -1,9 +1,9 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.Database.Data;
 
 public enum TaskPriority
 {
     Immediate,
-    Hight,
+    High,
     Normal,
     Low
 }

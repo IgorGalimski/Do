@@ -1,4 +1,4 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.View;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,7 +17,7 @@ enum ButtonsState {
     RIGHT_VISIBLE
 }
 
-class SwipeController extends Callback {
+public class SwipeController extends Callback {
 
     private boolean swipeBack = false;
 

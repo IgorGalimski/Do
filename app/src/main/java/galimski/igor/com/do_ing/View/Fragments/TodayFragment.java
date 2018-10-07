@@ -1,4 +1,4 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.View.Fragments;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -15,8 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TodayFragment extends Fragment {
+import galimski.igor.com.do_ing.Managers.TaskManager;
+import galimski.igor.com.do_ing.R;
+import galimski.igor.com.do_ing.View.RecyclerAdapter;
+import galimski.igor.com.do_ing.View.SwipeController;
+import galimski.igor.com.do_ing.View.SwipeControllerActions;
 
+public class TodayFragment extends Fragment
+{
     private View _view;
 
     private RecyclerView _recyclerView;
@@ -85,7 +91,7 @@ public class TodayFragment extends Fragment {
             @Override
             public void onRightClicked(int position)
             {
-                TaskManager.GetTasks().remove(position);
+                TaskManager.DeleteTask(TaskManager.GetTasks().get(position));
 
                 _adapter.notifyItemRemoved(position);
                 _adapter.notifyItemRangeChanged(position, _adapter.getItemCount());

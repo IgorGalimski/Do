@@ -1,7 +1,12 @@
-package galimski.igor.com.do_ing;
+package galimski.igor.com.do_ing.Managers;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import galimski.igor.com.do_ing.Database.Async.*;
+import galimski.igor.com.do_ing.Database.Data.Task;
+import galimski.igor.com.do_ing.Database.Data.TaskPriority;
+import galimski.igor.com.do_ing.View.Activites.MainActivity;
 
 public class TaskManager
 {
@@ -27,8 +32,6 @@ public class TaskManager
            {
                 MainActivity.ShowMessage(exp.getMessage());
            }
-
-           //_tasks.add(new Task("short", "full", TaskPriority.Immediate, Calendar.getInstance().getTime()));
        }
 
        return _tasks;

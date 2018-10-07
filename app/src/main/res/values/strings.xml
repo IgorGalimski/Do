@@ -13,4 +13,14 @@
     <string name="requare_field">Requare field</string>
     <string name="add_notification">AddNotification</string>
     <string name="delete_task">Delete task</string>
+
+    <!--Task lifecycle-->
+    <string name="create_task_lifecycle">Create new task</string>
+    <string name="update_task_lifecycle">Update task</string>
+    <string name="complete_task_lifecycle">Complete task</string>
+    <string name="delete_task_lifecycle">Delete task</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
