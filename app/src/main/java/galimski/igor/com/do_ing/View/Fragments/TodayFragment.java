@@ -17,9 +17,9 @@ import java.util.Date;
 
 import galimski.igor.com.do_ing.Managers.TaskManager;
 import galimski.igor.com.do_ing.R;
-import galimski.igor.com.do_ing.View.RecyclerAdapter;
 import galimski.igor.com.do_ing.View.SwipeController;
 import galimski.igor.com.do_ing.View.SwipeControllerActions;
+import galimski.igor.com.do_ing.View.TaskRecyclerAdapter;
 
 public class TodayFragment extends Fragment
 {
@@ -77,7 +77,7 @@ public class TodayFragment extends Fragment
         _layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         _recyclerView.setLayoutManager(_layoutManager);
 
-        _adapter = new RecyclerAdapter(TaskManager.GetTasks());
+        _adapter = new TaskRecyclerAdapter(TaskManager.GetTasks());
         _recyclerView.setAdapter(_adapter);
 
         final SwipeController swipeController = new SwipeController(new SwipeControllerActions()

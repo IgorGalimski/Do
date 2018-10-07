@@ -19,4 +19,15 @@ public class TaskLifecycle
 
     @TypeConverters({TaskConverter.class})
     public TaskLifecycleState TaskLifecycleState;
+
+    public TaskLifecycle()
+    {
+
+    }
+
+    public TaskLifecycle(Date date, TaskLifecycleState taskLifecycleState)
+    {
+        Date = date;
+        TaskLifecycleState = taskLifecycleState;
+    }
 }

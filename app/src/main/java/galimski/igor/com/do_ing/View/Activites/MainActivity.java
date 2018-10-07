@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     public TodayFragment TodayFragment;
     public AddTaskFragment AddTaskFragment;
+    public FeedFragment _feedFragment;
 
     private FloatingActionButton _addButton;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         TodayFragment = new TodayFragment();
         AddTaskFragment = new AddTaskFragment();
+        _feedFragment = new FeedFragment();
 
         UpdateFragment(TodayFragment);
 
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.action_feed:
 
-                                //UpdateFragment(null);
+                                UpdateFragment(_feedFragment);
 
                                 break;
                         }

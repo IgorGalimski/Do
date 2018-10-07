@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import galimski.igor.com.do_ing.Database.Data.Task;
 import galimski.igor.com.do_ing.R;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.ViewHolder>
 {
     private Task[] tasks;
 
@@ -30,14 +30,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    public RecyclerAdapter(ArrayList<Task> tasksToShow)
+    public TaskRecyclerAdapter(ArrayList<Task> tasksToShow)
     {
         tasks = new Task[tasksToShow.size()];
         tasks = tasksToShow.toArray(tasks);
     }
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public TaskRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
 

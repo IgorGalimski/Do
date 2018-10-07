@@ -8,16 +8,31 @@
     android:paddingBottom="10dp">
 
     <TextView
-        android:id="@+id/taskCycleDate"
+        android:id="@+id/taskLifecycleAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_marginStart="10dp"
+        android:layout_weight="3"
+        android:fontFamily="serif"
+        android:text="Task create"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp" />
 
-    <DateView
-        android:id="@+id/taskCycleAction"
+    <TextView
+        android:id="@+id/taskLifecycleDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="10sp"/>
+        android:fontFamily="sans-serif"
+        android:text="01-01-2011"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/taskLifecycleTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="11:11:11"
+        android:textAlignment="center" />
 
 </LinearLayout>

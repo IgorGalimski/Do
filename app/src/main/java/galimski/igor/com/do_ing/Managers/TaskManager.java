@@ -5,6 +5,7 @@ import java.util.Date;
 
 import galimski.igor.com.do_ing.Database.Async.*;
 import galimski.igor.com.do_ing.Database.Data.Task;
+import galimski.igor.com.do_ing.Database.Data.TaskLifecycle;
 import galimski.igor.com.do_ing.Database.Data.TaskPriority;
 import galimski.igor.com.do_ing.View.Activites.MainActivity;
 

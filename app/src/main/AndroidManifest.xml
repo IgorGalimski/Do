@@ -3,6 +3,7 @@
     package="galimski.igor.com.do_ing">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -36,7 +37,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7ba67ad9f15b81556b9eb7f97cf237b18476fd98" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
