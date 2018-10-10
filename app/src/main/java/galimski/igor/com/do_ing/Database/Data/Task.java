@@ -31,7 +31,7 @@ public class Task
     public String FullDescription;
 
     @TypeConverters({TaskConverter.class})
-    public boolean _notificationShown;
+    public boolean NotificationShown;
 
     public Task()
     {

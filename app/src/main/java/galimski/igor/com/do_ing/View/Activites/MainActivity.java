@@ -3,13 +3,13 @@ package galimski.igor.com.do_ing.View.Activites;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,8 +30,8 @@ import galimski.igor.com.do_ing.R;
 import galimski.igor.com.do_ing.View.Fragments.*;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity
+{
     private static MainActivity Instance = null;
 
     public static MainActivity GetInstance()
@@ -46,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
     public AddTaskFragment AddTaskFragment;
     public FeedFragment _feedFragment;
 
-    private FloatingActionButton _addButton;
+    AtomicInteger requestCodeCounter = new AtomicInteger(0);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
@@ -110,15 +111,17 @@ public class MainActivity extends AppCompatActivity {
                         .setContentTitle(task.ShortDescription)
                         .setContentText(task.FullDescription);
 
+        Intent doneIntent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCodeCounter.incrementAndGet(), doneIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.addAction(R.drawable.ic_action_name, getString(R.string.watch_task), pendingIntent);
+
         Notification notification = builder.build();
 
         return notification;
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.M)
     public void DelayNotification(Notification notification, long futureInMillis, int id){
-
-        AtomicInteger requestCodeCounter = new AtomicInteger(0);
 
         Intent notificationIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -128,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    public void CancelNotificatiion(int id)
+    {
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
     }
 
     public static void ShowMessage(String message)

@@ -1,6 +1,9 @@
 package galimski.igor.com.do_ing.Managers;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import galimski.igor.com.do_ing.Database.Async.*;
@@ -31,11 +34,24 @@ public class TaskManager
            }
            catch (Exception exp)
            {
-                MainActivity.ShowMessage(exp.getMessage());
+               Crashlytics.log(exp.getMessage());
            }
        }
 
        return _tasks;
+    }
+
+    public static Task GetTask(int id)
+    {
+        for (Task task: _tasks)
+        {
+            if(task.Id == id)
+            {
+              return task;
+            }
+        }
+
+        return null;
     }
 
     public static void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completitionDate, Boolean addNotification)
@@ -45,7 +61,10 @@ public class TaskManager
 
         if(addNotification)
         {
-            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
+            //MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
+
+            long date = Calendar.getInstance().getTime().getTime() + 5000;
+            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), date, newTask.Id);
         }
 
         AddTaskAsync addTaskAsync = new AddTaskAsync();
@@ -55,6 +74,8 @@ public class TaskManager
     public static void DeleteTask(Task task)
     {
         _tasks.remove(task);
+
+        MainActivity.GetInstance().CancelNotificatiion(task.Id);
 
         DeleteTaskAsync deleteTaskAsync = new DeleteTaskAsync();
         deleteTaskAsync.execute(task);

@@ -1,5 +1,6 @@
 package galimski.igor.com.do_ing.View;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,12 @@ import galimski.igor.com.do_ing.R;
 
 public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.ViewHolder>
 {
-    private Task[] tasks;
+    private ArrayList<Task> tasks;
+
+    public ArrayList<Task> getTasks()
+    {
+        return tasks;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -32,8 +38,9 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
     public TaskRecyclerAdapter(ArrayList<Task> tasksToShow)
     {
-        tasks = new Task[tasksToShow.size()];
-        tasks = tasksToShow.toArray(tasks);
+        /*tasks = new Task[tasksToShow.size()];
+        tasks = tasksToShow.toArray(tasks);*/
+        tasks = tasksToShow;
     }
 
     @Override
@@ -48,16 +55,25 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Task task = tasks[position];
+        Task task = tasks.get(position);
 
         holder.shortDescrView.setText(task.ShortDescription);
+        if(!task.NotificationShown)
+        {
+            holder.shortDescrView.setTypeface(holder.shortDescrView.getTypeface(), Typeface.BOLD);
+        }
+        else
+        {
+            holder.shortDescrView.setTypeface(holder.shortDescrView.getTypeface(), Typeface.NORMAL);
+        }
+
         holder.iconView.setColorFilter(task.GetTaskPriorityColor());
     }
 
     @Override
     public int getItemCount()
     {
-        return tasks.length;
+        return tasks.size();
     }
 }
 

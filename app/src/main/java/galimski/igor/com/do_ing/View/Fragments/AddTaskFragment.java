@@ -16,22 +16,24 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import galimski.igor.com.do_ing.Database.Data.TaskPriority;
+import galimski.igor.com.do_ing.Managers.TaskLifecycleManager;
 import galimski.igor.com.do_ing.View.Activites.MainActivity;
 import galimski.igor.com.do_ing.Managers.TaskManager;
 import galimski.igor.com.do_ing.R;
 
-public class AddTaskFragment extends Fragment {
-
+public class AddTaskFragment extends Fragment
+{
     private Spinner _prioritySpinner;
 
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.fragment_create_task, container, false);
 
         _prioritySpinner = view.findViewById(R.id.priority_spinner);
@@ -71,11 +73,20 @@ public class AddTaskFragment extends Fragment {
 
         TaskPriority taskPriority = (TaskPriority) _prioritySpinner.getSelectedItem();
 
-        Date completionDate = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getHour(), timePicker.getMinute());
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, datePicker.getYear() - 1900);
+        cal.set(Calendar.MONTH, datePicker.getMonth() + 1);
+        cal.set(Calendar.DATE, datePicker.getDayOfMonth());
+        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+        cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date completionDate = cal.getTime();
 
         Boolean showNotification = showNotificationCheckbox.isSelected();
 
         TaskManager.AddTask(shortDescription, fullDescription, taskPriority, completionDate, showNotification);
+        TaskLifecycleManager.OnTaskCreate();
 
         Toast toast = Toast.makeText(getContext(), R.string.task_added, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
