@@ -25,6 +25,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextView shortDescrView;
+        public TextView _timeView;
+
         public ImageView iconView;
 
         public ViewHolder(View view)
@@ -32,15 +34,14 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             super(view);
 
             shortDescrView = (TextView) view.findViewById(R.id.short_description_text);
+            _timeView = view.findViewById(R.id.time_text);
+
             iconView = (ImageView) view.findViewById(R.id.iconView);
         }
     }
 
     public TaskRecyclerAdapter(ArrayList<Task> tasksToShow)
-    {
-        /*tasks = new Task[tasksToShow.size()];
-        tasks = tasksToShow.toArray(tasks);*/
-        tasks = tasksToShow;
+    {        tasks = tasksToShow;
     }
 
     @Override
@@ -66,6 +67,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         {
             holder.shortDescrView.setTypeface(holder.shortDescrView.getTypeface(), Typeface.NORMAL);
         }
+
+        holder._timeView.setText(task.GetTime());
 
         holder.iconView.setColorFilter(task.GetTaskPriorityColor());
     }

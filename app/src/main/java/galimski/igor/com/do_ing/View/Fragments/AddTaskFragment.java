@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import galimski.igor.com.do_ing.Database.Data.TaskPriority;
 import galimski.igor.com.do_ing.Managers.TaskLifecycleManager;
@@ -29,17 +30,21 @@ public class AddTaskFragment extends Fragment
 {
     private Spinner _prioritySpinner;
 
-    private View view;
+    private View _view;
+
+    TextView _shortDescriptionView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_create_task, container, false);
+        _view = inflater.inflate(R.layout.fragment_create_task, container, false);
 
-        _prioritySpinner = view.findViewById(R.id.priority_spinner);
+        _prioritySpinner = _view.findViewById(R.id.priority_spinner);
         _prioritySpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, TaskPriority.values()));
 
-        Button submitButton = view.findViewById(R.id.submit_button);
+        _shortDescriptionView = _view.findViewById(R.id.short_description_text);
+
+        Button submitButton = _view.findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,43 +52,38 @@ public class AddTaskFragment extends Fragment
             }
         });
 
-        return view;
+        return _view;
     }
 
     private void AddTask()
     {
-        TextView shortDescriptionView = view.findViewById(R.id.short_description_text);
-
-        if(TextUtils.isEmpty(shortDescriptionView.getText()))
+        if(TextUtils.isEmpty(_shortDescriptionView.getText()))
         {
-            shortDescriptionView.setError(getResources().getString(R.string.requare_field));
+            _shortDescriptionView.setError(getResources().getString(R.string.requare_field));
 
             return;
         }
 
-        TextView fullDescriptionView = view.findViewById(R.id.full_description_text);
+        TextView fullDescriptionView = _view.findViewById(R.id.full_description_text);
 
-        DatePicker datePicker = view.findViewById(R.id.date);
-        TimePicker timePicker = view.findViewById(R.id.time);
+        DatePicker datePicker = _view.findViewById(R.id.date);
+        TimePicker timePicker = _view.findViewById(R.id.time);
 
-        CheckBox showNotificationCheckbox = view.findViewById(R.id.add_notification_checkbox);
+        CheckBox showNotificationCheckbox = _view.findViewById(R.id.add_notification_checkbox);
 
-        String shortDescription = shortDescriptionView.getText().toString();
+        String shortDescription = _shortDescriptionView.getText().toString();
         String fullDescription = fullDescriptionView.getText().toString();
 
         TaskPriority taskPriority = (TaskPriority) _prioritySpinner.getSelectedItem();
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, datePicker.getYear() - 1900);
-        cal.set(Calendar.MONTH, datePicker.getMonth() + 1);
-        cal.set(Calendar.DATE, datePicker.getDayOfMonth());
-        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        Date completionDate = cal.getTime();
+        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                datePicker.getMonth(),
+                datePicker.getDayOfMonth(),
+                timePicker.getCurrentHour(),
+                timePicker.getCurrentMinute());
+        Date completionDate = calendar.getTime();
 
-        Boolean showNotification = showNotificationCheckbox.isSelected();
+        Boolean showNotification = showNotificationCheckbox.isChecked();
 
         TaskManager.AddTask(shortDescription, fullDescription, taskPriority, completionDate, showNotification);
         TaskLifecycleManager.OnTaskCreate();

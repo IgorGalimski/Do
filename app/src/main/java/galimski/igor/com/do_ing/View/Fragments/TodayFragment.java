@@ -8,13 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.joda.time.DateTimeComparator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,8 +76,6 @@ public class TodayFragment extends Fragment
 
     public void ShowTasks()
     {
-        Date date = Calendar.getInstance().getTime();
-
         _recyclerView = (RecyclerView) _view.findViewById(R.id.taskRecyclerView);
 
         _layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -89,8 +84,7 @@ public class TodayFragment extends Fragment
         final ArrayList<Task> tasks = new ArrayList<>();
         for(Task task: TaskManager.GetTasks())
         {
-            //int compareResult = DateTimeComparator.getDateOnlyInstance().compare(task.CompletionDate, date);
-            //if(isToday(task.CompletionDate))
+            if(isToday(task.CompletionDate))
             {
                 tasks.add(task);
             }
@@ -114,8 +108,6 @@ public class TodayFragment extends Fragment
                 TaskManager.DeleteTask(task);
 
                 _adapter.getTasks().remove(task);
-
-                //tasks.remove(position);
 
                 _adapter.notifyItemRemoved(position);
                 _adapter.notifyItemRangeChanged(position, tasks.size());

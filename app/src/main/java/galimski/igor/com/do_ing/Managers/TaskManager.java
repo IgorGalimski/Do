@@ -61,10 +61,7 @@ public class TaskManager
 
         if(addNotification)
         {
-            //MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
-
-            long date = Calendar.getInstance().getTime().getTime() + 5000;
-            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), date, newTask.Id);
+            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
         }
 
         AddTaskAsync addTaskAsync = new AddTaskAsync();

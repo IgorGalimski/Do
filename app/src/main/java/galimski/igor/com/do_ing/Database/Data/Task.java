@@ -6,6 +6,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.graphics.Color;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -74,5 +76,11 @@ public class Task
             }
         }
         return 0;
+    }
+
+    public String GetTime()
+    {
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        return df.format(CompletionDate);
     }
 }

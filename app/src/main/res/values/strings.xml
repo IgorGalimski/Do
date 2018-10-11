@@ -24,5 +24,6 @@
 
     <!--Task action -->
     <string name="watch_task">WATCH</string>
+    <string name="priority_hint">Priority</string>
 
 </resources>
