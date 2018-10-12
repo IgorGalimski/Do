@@ -61,16 +61,17 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         holder.shortDescrView.setText(task.ShortDescription);
         if(!task.NotificationShown)
         {
-            holder.shortDescrView.setTypeface(holder.shortDescrView.getTypeface(), Typeface.BOLD);
+            holder.iconView.setImageResource(R.drawable.ic_action_name);
+            holder.iconView.setColorFilter(task.GetTaskPriorityColor());
         }
         else
         {
-            holder.shortDescrView.setTypeface(holder.shortDescrView.getTypeface(), Typeface.NORMAL);
+            holder.iconView.setImageResource(R.mipmap.ic_task_done);
         }
 
         holder._timeView.setText(task.GetTime());
 
-        holder.iconView.setColorFilter(task.GetTaskPriorityColor());
+
     }
 
     @Override

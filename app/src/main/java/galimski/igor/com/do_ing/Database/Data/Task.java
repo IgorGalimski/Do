@@ -83,4 +83,9 @@ public class Task
         DateFormat df = new SimpleDateFormat("HH:mm");
         return df.format(CompletionDate);
     }
+
+    public boolean IsTimeCome()
+    {
+        return CompletionDate.getTime() < Calendar.getInstance().getTime().getTime();
+    }
 }

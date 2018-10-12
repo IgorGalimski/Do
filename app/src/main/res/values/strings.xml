@@ -13,8 +13,8 @@
     <string name="requare_field">Requare field</string>
     <string name="add_notification">AddNotification</string>
     <string name="delete_task">Delete task</string>
-    <string name="mark_task_shown">Mark task shown</string>
-    <string name="mark_task_not_shown">Mark task not shown</string>
+    <string name="mark_task_shown">Delete notification</string>
+    <string name="mark_task_not_shown">Add notification</string>
 
     <!--Task lifecycle-->
     <string name="create_task_lifecycle">Create new task</string>

@@ -118,7 +118,7 @@ public class TodayFragment extends Fragment
             @Override
             public void onClick(int position)
             {
-                ShowTaskDialog(TaskManager.GetTasks().get(position));
+                ShowTaskDialog(_adapter.getTasks().get(position), position);
             }
 
             @Override
@@ -140,34 +140,39 @@ public class TodayFragment extends Fragment
         });
     }
 
-    private void ShowTaskDialog(final Task task)
+    private void ShowTaskDialog(final Task task, final int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setIcon(R.mipmap.ic_task_done);
         builder.setTitle(task.ShortDescription);
         builder.setMessage(task.FullDescription);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int id)
             {
-            }
-        });
-        String shownString = task.NotificationShown ? getResources().getString(R.string.mark_task_not_shown) : getResources().getString(R.string.mark_task_shown);
-        builder.setNegativeButton(shownString, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
-                if (!task.NotificationShown)
-                {
-                    MainActivity.GetInstance().CancelNotificatiion(task.Id);
-                }
-                else
-                {
-                    MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(task), task.CompletionDate.getTime(), task.Id);
-                }
 
-                task.NotificationShown = !task.NotificationShown;
             }
         });
+
+        if(!task.IsTimeCome())
+        {
+            String shownString = task.NotificationShown ? getResources().getString(R.string.mark_task_not_shown) : getResources().getString(R.string.mark_task_shown);
+            builder.setNegativeButton(shownString, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    if (!task.NotificationShown)
+                    {
+                        MainActivity.GetInstance().CancelNotificatiion(task.Id);
+                    } else {
+                        MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(task), task.CompletionDate.getTime(), task.Id);
+                    }
+
+                    task.NotificationShown = !task.NotificationShown;
+
+                    _adapter.notifyItemChanged(position);
+                }
+            });
+        }
 
         builder.show();
     }
