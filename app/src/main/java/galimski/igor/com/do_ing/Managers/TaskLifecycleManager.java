@@ -36,12 +36,7 @@ public class TaskLifecycleManager
 
     public static void OnTaskCreate()
     {
-        TaskLifecycle taskLifecycle = new TaskLifecycle(Calendar.getInstance().getTime(), TaskLifecycleState.CREATED);
-
-        _tasksLifecycles.add(taskLifecycle);
-
-        AddTaskLifecycleAsync addTaskLifecycleAsync = new AddTaskLifecycleAsync();
-        addTaskLifecycleAsync.execute(taskLifecycle);
+        CommitTaskLifecycle(TaskLifecycleState.CREATED);
     }
 
     public static void OnTaskUpdate()
@@ -51,11 +46,21 @@ public class TaskLifecycleManager
 
     public static void OnTaskComplete()
     {
-
+        CommitTaskLifecycle(TaskLifecycleState.COMPLETED);
     }
 
     public static void OnTaskDelete()
     {
+        CommitTaskLifecycle(TaskLifecycleState.DELETED);
+    }
 
+    private static void CommitTaskLifecycle(TaskLifecycleState taskLifecycleState)
+    {
+        TaskLifecycle taskLifecycle = new TaskLifecycle(Calendar.getInstance().getTime(), taskLifecycleState);
+
+        _tasksLifecycles.add(taskLifecycle);
+
+        AddTaskLifecycleAsync addTaskLifecycleAsync = new AddTaskLifecycleAsync();
+        addTaskLifecycleAsync.execute(taskLifecycle);
     }
 }

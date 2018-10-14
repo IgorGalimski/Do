@@ -92,6 +92,7 @@ public class AddTaskFragment extends Fragment
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
+        MainActivity.GetInstance().SetSelectetBottomMenu(R.id.action_today);
         MainActivity.GetInstance().UpdateFragment(MainActivity.GetInstance().TodayFragment);
     }
 }

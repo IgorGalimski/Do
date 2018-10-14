@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import galimski.igor.com.do_ing.Database.Data.Task;
+import galimski.igor.com.do_ing.Database.Data.TaskLifecycle;
+import galimski.igor.com.do_ing.Managers.TaskLifecycleManager;
 import galimski.igor.com.do_ing.Managers.TaskManager;
 import galimski.igor.com.do_ing.R;
 import galimski.igor.com.do_ing.View.Activites.MainActivity;
@@ -106,6 +108,7 @@ public class TodayFragment extends Fragment
             {
                 Task task = _adapter.getTasks().get(position);
                 TaskManager.DeleteTask(task);
+                TaskLifecycleManager.OnTaskDelete();
 
                 _adapter.getTasks().remove(task);
 
@@ -118,7 +121,10 @@ public class TodayFragment extends Fragment
             @Override
             public void onClick(int position)
             {
-                ShowTaskDialog(_adapter.getTasks().get(position), position);
+                //if(!swipeController.IsButtonShowing())
+                {
+                    ShowTaskDialog(_adapter.getTasks().get(position), position);
+                }
             }
 
             @Override

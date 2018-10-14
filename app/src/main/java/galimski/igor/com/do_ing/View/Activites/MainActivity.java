@@ -20,9 +20,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import galimski.igor.com.do_ing.Managers.AdsManager;
 import galimski.igor.com.do_ing.Other.AlarmReceiver;
 import galimski.igor.com.do_ing.Database.Data.Task;
 import galimski.igor.com.do_ing.Database.DatabaseHelper;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         Instance = this;
-
+        AdsManager.Init();
         DatabaseHelper.Init();
 
         ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WAKE_LOCK}, 123 );
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity
                             case R.id.action_today:
 
                                 UpdateFragment(TodayFragment);
+                                AdsManager.Show();
 
                                 break;
                             case R.id.action_add:
@@ -92,6 +95,11 @@ public class MainActivity extends AppCompatActivity
                         return true;
                     }
                 });
+    }
+
+    public void SetSelectetBottomMenu(int id)
+    {
+        _bottomNavigationView.setSelectedItemId(id);
     }
 
     public void UpdateFragment(Fragment fragment)

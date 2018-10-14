@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:26.1.0'
 
+    implementation 'com.google.android.gms:play-services-ads:17.0.0'
+
     implementation 'joda-time:joda-time:2.9.9'
 
     // Dependencies for working with Architecture components
