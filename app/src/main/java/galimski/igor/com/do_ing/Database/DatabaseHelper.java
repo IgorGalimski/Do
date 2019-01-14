@@ -22,11 +22,11 @@ public class DatabaseHelper {
         db =  Room.databaseBuilder(MainActivity.GetInstance().getApplicationContext(), AppDatabase.class, DATABASE_NAME).build().taskDao();
     }
 
-    public static void AddTask(Task task) {
+    public static void AddTask(Task task)
+    {
         Log.i(TAG, "MyDatabaseHelper.addTask ... ");
 
         db.insertTask(task);
-
     }
 
     public static Task GetTask(int id) {
@@ -41,20 +41,6 @@ public class DatabaseHelper {
 
         return new ArrayList<>(db.getAllTasks());
     }
-
-    /*public int updateNote(Note note) {
-        Log.i(TAG, "MyDatabaseHelper.updateNote ... "  + note.getNoteTitle());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOTE_TITLE, note.getNoteTitle());
-        values.put(COLUMN_NOTE_CONTENT, note.getNoteContent());
-
-        // updating row
-        return db.update(TABLE_NOTE, values, COLUMN_NOTE_ID + " = ?",
-                new String[]{String.valueOf(note.getNoteId())});
-    }*/
 
     public static void DeleteTask(Task task)
     {

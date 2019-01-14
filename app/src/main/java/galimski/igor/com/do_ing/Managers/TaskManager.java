@@ -16,11 +16,6 @@ public class TaskManager
 {
     private static ArrayList<Task> _tasks = new ArrayList<Task>();
 
-    public TaskManager()
-    {
-
-    }
-
     public static ArrayList<Task> GetTasks()
     {
        if(_tasks.size() == 0)
@@ -54,18 +49,17 @@ public class TaskManager
         return null;
     }
 
-    public static void AddTask(String shortDescription, String fullDescription, TaskPriority taskPriority, Date completitionDate, Boolean addNotification)
+    public static void AddTask(Task task, boolean addNotification)
     {
-        Task newTask = new Task(shortDescription, fullDescription, taskPriority, completitionDate);
-        _tasks.add(newTask);
+        _tasks.add(task);
 
         if(addNotification)
         {
-            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(newTask), newTask.CompletionDate.getTime(), newTask.Id);
+            MainActivity.GetInstance().DelayNotification(MainActivity.GetInstance().CreateNotification(task), task.CompletionDate.getTime(), task.Id);
         }
 
         AddTaskAsync addTaskAsync = new AddTaskAsync();
-        addTaskAsync.execute(newTask);
+        addTaskAsync.execute(task);
     }
 
     public static void DeleteTask(Task task)

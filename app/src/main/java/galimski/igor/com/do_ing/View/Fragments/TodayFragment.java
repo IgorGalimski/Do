@@ -38,7 +38,8 @@ public class TodayFragment extends Fragment
     private RecyclerView.LayoutManager _layoutManager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 
@@ -121,10 +122,7 @@ public class TodayFragment extends Fragment
             @Override
             public void onClick(int position)
             {
-                //if(!swipeController.IsButtonShowing())
-                {
-                    ShowTaskDialog(_adapter.getTasks().get(position), position);
-                }
+                ShowTaskDialog(_adapter.getTasks().get(position), position);
             }
 
             @Override
@@ -160,7 +158,7 @@ public class TodayFragment extends Fragment
             }
         });
 
-        if(!task.IsTimeCome())
+        if(!task.HasTimeCome())
         {
             String shownString = task.NotificationShown ? getResources().getString(R.string.mark_task_not_shown) : getResources().getString(R.string.mark_task_shown);
             builder.setNegativeButton(shownString, new DialogInterface.OnClickListener() {

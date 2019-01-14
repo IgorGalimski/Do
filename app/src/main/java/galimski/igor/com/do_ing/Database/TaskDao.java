@@ -12,8 +12,8 @@ import galimski.igor.com.do_ing.Database.Data.Task;
 import galimski.igor.com.do_ing.Database.Data.TaskLifecycle;
 
 @Dao
-public interface TaskDao {
-
+public interface TaskDao
+{
     @Query("SELECT * FROM task")
     List<Task> getAllTasks();
 
@@ -43,5 +43,4 @@ public interface TaskDao {
 
     @Delete
     void deleteTaskLifecycle(TaskLifecycle taskLifecycle);
-
 }

@@ -84,7 +84,7 @@ public class Task
         return df.format(CompletionDate);
     }
 
-    public boolean IsTimeCome()
+    public boolean HasTimeCome()
     {
         return CompletionDate.getTime() < Calendar.getInstance().getTime().getTime();
     }

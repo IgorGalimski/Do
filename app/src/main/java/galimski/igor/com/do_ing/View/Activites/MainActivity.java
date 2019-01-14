@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView _bottomNavigationView;
     FragmentManager _fragmentManager;
 
-    public TodayFragment TodayFragment;
-    public AddTaskFragment AddTaskFragment;
+    public TodayFragment _todayFragment;
+    public AddTaskFragment _addTaskFragment;
     public FeedFragment _feedFragment;
 
     AtomicInteger requestCodeCounter = new AtomicInteger(0);
@@ -63,27 +63,30 @@ public class MainActivity extends AppCompatActivity
 
         ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.WAKE_LOCK}, 123 );
 
-        TodayFragment = new TodayFragment();
-        AddTaskFragment = new AddTaskFragment();
+        _todayFragment = new TodayFragment();
+        _addTaskFragment = new AddTaskFragment();
         _feedFragment = new FeedFragment();
 
-        UpdateFragment(TodayFragment);
+        UpdateFragment(_todayFragment);
 
         _bottomNavigationView = findViewById(R.id.bottomNavigationView);
         _bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                new BottomNavigationView.OnNavigationItemSelectedListener()
+                {
                     @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
                             case R.id.action_today:
 
-                                UpdateFragment(TodayFragment);
+                                UpdateFragment(_todayFragment);
                                 AdsManager.Show();
 
                                 break;
                             case R.id.action_add:
 
-                                UpdateFragment(AddTaskFragment);
+                                UpdateFragment(_addTaskFragment);
 
                                 break;
                             case R.id.action_feed:
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity
 
                                 break;
                         }
+
                         return true;
                     }
                 });

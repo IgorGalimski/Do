@@ -28,8 +28,8 @@ public class AdsManager
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
-            public void onAdClosed() {
-                // Load the next interstitial.
+            public void onAdClosed()
+            {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
 

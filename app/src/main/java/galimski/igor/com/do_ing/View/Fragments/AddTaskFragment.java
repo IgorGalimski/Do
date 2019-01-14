@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import galimski.igor.com.do_ing.Database.Data.TaskPriority;
+import galimski.igor.com.do_ing.Database.Data.Task;
 import galimski.igor.com.do_ing.Managers.TaskLifecycleManager;
 import galimski.igor.com.do_ing.View.Activites.MainActivity;
 import galimski.igor.com.do_ing.Managers.TaskManager;
@@ -45,9 +46,11 @@ public class AddTaskFragment extends Fragment
         _shortDescriptionView = _view.findViewById(R.id.short_description_text);
 
         Button submitButton = _view.findViewById(R.id.submit_button);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        submitButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 AddTask();
             }
         });
@@ -84,8 +87,9 @@ public class AddTaskFragment extends Fragment
         Date completionDate = calendar.getTime();
 
         Boolean showNotification = showNotificationCheckbox.isChecked();
+        Task task = new Task(shortDescription, fullDescription, taskPriority, completionDate);
 
-        TaskManager.AddTask(shortDescription, fullDescription, taskPriority, completionDate, showNotification);
+        TaskManager.AddTask(task, showNotification);
         TaskLifecycleManager.OnTaskCreate();
 
         Toast toast = Toast.makeText(getContext(), R.string.task_added, Toast.LENGTH_SHORT);
@@ -93,6 +97,6 @@ public class AddTaskFragment extends Fragment
         toast.show();
 
         MainActivity.GetInstance().SetSelectetBottomMenu(R.id.action_today);
-        MainActivity.GetInstance().UpdateFragment(MainActivity.GetInstance().TodayFragment);
+        MainActivity.GetInstance().UpdateFragment(MainActivity.GetInstance()._todayFragment);
     }
 }
